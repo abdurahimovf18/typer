@@ -12,6 +12,10 @@ data = {
 }
 
 
+def reset():
+    return Style.RESET_ALL
+
+
 def colored(text: str, color: str) -> str:
-    text = f"{data.get(color, data['white'])}{text}{Style.RESET_ALL}"
+    text = f"{data.get(color, data['white'])}{text}"
     return text

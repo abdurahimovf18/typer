@@ -1,8 +1,9 @@
+
 import keyboard as kb
 from text import Text
 import string
 import os
-from colors import colored
+from colors import colored, reset
 
 
 class App(object):
@@ -11,8 +12,8 @@ class App(object):
         self.mistakes = 0
         self.last_wpm = 0
         self.logic = {
-            "1": lambda: self.text.set_configurations(),
-            "2": lambda: self.text.set_settings()
+            "1": self.text.set_configurations,
+            "2": self.text.set_settings
         }
         self.barrier_color = "yellow"
         self.text_color = "cyan"
@@ -31,10 +32,12 @@ class App(object):
                 self.execute_new_pressing({letter for letter in string.ascii_letters + " " if kb.is_pressed(letter)})
                 [self.logic[letter]() for letter in self.logic.keys() if kb.is_pressed(letter)]
 
+                # looking for changes
                 if not self.text.change:
                     continue
 
                 self.text.change = False
+
                 # showing
                 os.system("cls")
                 print("\n" * 3)
@@ -61,7 +64,7 @@ class App(object):
 
 {enter * 7}
     
-{self.text.show_text}"""
+{self.text.show_text}{reset()}"""
                 print(text)
 
     def set_wpm(self, wpm: float):
